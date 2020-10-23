@@ -1,8 +1,12 @@
 import { StatusBar,  } from 'expo-status-bar';
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, ActivityIndicator } from 'react-native';
 import * as Location from 'expo-location';
 import WeatherInfo from './components/WeatherInfo';
+import UnitPicker from './components/UnitPicker';
+import { colors } from './utils';
+import ReloadIcon from './components/ReloadIcon';
+import WeatherDetails from './components/WeatherDetails';
 
 const WEATHER_API_KEY = 'a189893b662fdb9825ead862828a37d7';
 const BASE_WHEATER_URL = 'https://api.openweathermap.org/data/2.5/weather?'
@@ -20,6 +24,7 @@ export default function App() {
   }, [unitsSystem])
 
   const load = async() => {
+    setCurrentWeather(null);
     try {
       let { status } = await Location.requestPermissionsAsync();
 
@@ -57,12 +62,15 @@ export default function App() {
       <View style={styles.container}>
         <StatusBar style="auto" />
         <View style={styles.main}>
+          <ReloadIcon handleLoad={ load }/>
+          <UnitPicker unitsSystem={ unitsSystem } setUnitsSystem={ setUnitsSystem } />
           <WeatherInfo currentWeather={ currentWeather } />
         </View>
+        <WeatherDetails currentWeather={ currentWeather } />
       </View>
     );
 
-  } else {
+  } else if (errorMessage) {
 
     return (
       <View style={styles.container}>
@@ -71,6 +79,12 @@ export default function App() {
       </View>
     );
 
+  } else {
+    return (
+      <View style={styles.container}>
+        <ActivityIndicator size="large" color={ colors.PRIMARY_COLOR }/>
+      </View>
+    )
   }
 
 }
@@ -78,12 +92,13 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFF',
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: '#EFEFEF'
   },
   main: {
     justifyContent: 'center',
     flex: 1,
+    minWidth: '100%',
   }
 });

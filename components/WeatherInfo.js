@@ -1,4 +1,3 @@
-import { useFonts } from 'expo-font';
 import React from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
 import { colors } from '../utils/index';
@@ -23,7 +22,7 @@ export default function WeatherInfo ({currentWeather}) {
       <Text style={styles.textPrimary}>{ temp }°</Text>
       <Text style={styles.textName}>{ name }</Text>
       <Text style={styles.weatherDescription}>{ description }</Text>
-      <Text>{ main }</Text>
+      <Text style={styles.textMain}>{ main }</Text>
     </View>
   )
 }
@@ -40,18 +39,21 @@ const styles = StyleSheet.create({
     height: 100,
   },
   weatherDescription: {
-    textTransform: 'capitalize'
+    textTransform: 'capitalize',
+    color: SECONDARY_COLOR,
   },
   textPrimary: {
     color: PRIMARY_COLOR,
-    fontSize:  125,
+    fontSize:  100,
     fontWeight: 'bold',
   },
   textName: {
     fontSize: 35,
     textTransform: 'uppercase',
     fontWeight: 'bold',
-    color: LIGHT_COLOR
-
+    color: SECONDARY_COLOR
+  },
+  textMain: {
+    color: SECONDARY_COLOR
   }
 })

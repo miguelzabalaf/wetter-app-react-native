@@ -62,7 +62,8 @@ export default function WeatherDetails({ currentWeather }) {
 const styles = StyleSheet.create({
   weatherDetails: {
     borderColor: LIGHT_COLOR,
-    borderRadius: 25,
+    borderTopRightRadius: 25,
+    borderTopLeftRadius: 25,
     marginTop: 'auto',
     width: '100%',
     backgroundColor: '#FFF',
